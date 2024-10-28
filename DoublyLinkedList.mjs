@@ -24,7 +24,7 @@ class DoublyLinkedList {
 	//생성자
 	constructor() {
 		this.head = null; //연결리스트의 시작노드
-		this.tail = null; //
+		this.tail = null;
 		this.count = 0; //총 저장된 노드의 수
 	}
 	//함수의 원형- 원하는 인덱스에 데이터 삽입하는 함수
@@ -38,8 +38,14 @@ class DoublyLinkedList {
 		if (index == 0) {
 			//case1. 맨 앞에 삽입하는 경우
 			newNode.next = this.head;
-			this.tail = newNode.next;
+			if (this.head != null) {
+				this.head.prev = newNode; //this.tail = newNode.next;
+			}
 			this.head = newNode;
+		} else if (index === this.count) {
+			//tail에 삽입하는 경우
+			newNode.next = null;
+			newNode.prev = this.tail; //원래 tail에 있던 값을 이전 값으로 넣어준다.
 		} else {
 			//case2. 그 외에 삽입하는 경우
 			let currentNode = this.head; //삽입하려는 노드 직전까지 가기위한 노드
