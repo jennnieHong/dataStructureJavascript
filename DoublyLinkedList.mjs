@@ -24,7 +24,7 @@ class DoublyLinkedList {
 	//생성자
 	constructor() {
 		this.head = null; //연결리스트의 시작노드
-		this.tail = null;
+		this.tail = null; //마지막노드
 		this.count = 0; //총 저장된 노드의 수
 	}
 	//함수의 원형- 원하는 인덱스에 데이터 삽입하는 함수
@@ -39,21 +39,29 @@ class DoublyLinkedList {
 			//case1. 맨 앞에 삽입하는 경우
 			newNode.next = this.head;
 			if (this.head != null) {
-				this.head.prev = newNode; //this.tail = newNode.next;
+				this.head.prev = newNode; //this.tail = newNode.next; 테일을 설정하는 경우는 마지막에 삽입하는 때만인가? (O)
 			}
 			this.head = newNode;
 		} else if (index === this.count) {
-			//tail에 삽입하는 경우
+			//case2. tail에 삽입하는 경우
 			newNode.next = null;
-			newNode.prev = this.tail; //원래 tail에 있던 값을 이전 값으로 넣어준다.
+			newNode.prev = this.tail; //원래 tail에 있던 노드를 이전 값으로 넣어준다. 테일값에 있던 건 이전 노드가 됨
+			this.tail.next = newNode; //테일 자체와 테일의 넥스트는 별개로 움직이는거고 별개로 설정해야함... 이전테일의 넥스트는 새노드가 됨
+			//마직막노드를 테일로 설정하는건 공통
 		} else {
-			//case2. 그 외에 삽입하는 경우
+			//case3. 그 외에 삽입하는 경우
 			let currentNode = this.head; //삽입하려는 노드 직전까지 가기위한 노드
 			for (let i = 0; i < index - 1; i++) {
 				currentNode = currentNode.next;
 			}
 			newNode.next = currentNode.next;
+			// currentNode.next.prev = newNode; //<- 이 다음다음 줄과 동일한 역할을 할수 있는가? (O)일듯
+			newNode.prev = currentNode;
 			currentNode.next = newNode;
+			newNode.next.prev = newNode;
+		}
+		if (newNode.next === null) {
+			this.tail = newNode;
 		}
 		this.count++;
 	}
