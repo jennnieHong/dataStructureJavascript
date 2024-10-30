@@ -41,7 +41,10 @@ class HashTable {
         this.arr[this.hashFunction(key)].insertAt(0, new HashData(key, value));
     }
     get(key) {
-        let currentNode = this.hashFunction(key).head; //해당 인덱스값 this.hashFunction(key) .head첫 노드가 인덱스가 되는구나..
-        const hashData = this.arr[this.hashFunction(key)];
+        let currentNode = this.arr[this.hashFunction(key)].head; //해당 인덱스값: this.hashFunction(key) .head 첫 노드..
+        while (currentNode != null) {
+            //리스트의 끝이 널일 때 까지 반복
+            this.arr[this.hashFunction(key)];
+        }
     }
 }
